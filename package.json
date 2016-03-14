@@ -1,0 +1,26 @@
+{
+  "name": "Host_API",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^1.0.0",
+    "mocha": "^2.4.5",
+    "request": "^2.69.0",
+    "should": "^8.2.2",
+    "supertest": "^1.2.0"
+  }
+}
