@@ -66,7 +66,7 @@ Returns a multidimensional object of all the links
 		  "dest": "e"
   	},
 	  {
-		  "description": "ftpc",
+		  "description": "ftp",
 		  "dest": "f"
 	  }
 	],
