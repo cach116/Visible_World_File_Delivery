@@ -84,9 +84,7 @@
    * @returns {object} - Object of all hosts and their links
    */
   graph.prototype.getLinks = function () {
-    return _.mapObject(this.nodes, function (nodes) {
-      return nodes[0];
-    });
+    return this.nodes;
   };
 
   /**
