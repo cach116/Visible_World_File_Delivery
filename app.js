@@ -32,9 +32,9 @@
    * @returns {boolean}
    */
   graph.prototype.addHost = function (newHost, host, link, dest) {
-    if (!_.has(this.nodes, newHost.toLowerCase())) {
-      this.nodes[newHost.toLowerCase()] = [];
-      this.neighbors[newHost.toLowerCase()] = [];
+    if (!_.has(this.nodes, newHost)) {
+      this.nodes[newHost] = [];
+      this.neighbors[newHost] = [];
       if (!_.isUndefined(host) && !_.isUndefined(link) && !_.isUndefined(dest)) {
         this.createLink(host, link, dest);
         return true;
@@ -62,17 +62,17 @@
    * @returns {boolean}
    */
   graph.prototype.createLink = function (host, link, dest) {
-    if (!_.has(this.nodes, host.toLowerCase())) {
+    if (!_.has(this.nodes, host)) {
       //create host entry for source host
       this.addHost(host, host, link, dest);
-    } else if (!_.has(this.nodes, dest.toLowerCase())) {
+    } else if (!_.has(this.nodes, dest)) {
       //create host entry for destination host
       this.addHost(dest, host, link, dest);
     } else if (_.isEmpty(_.filter(this.nodes[host], function (i) {
-          return i.description.toLowerCase() === link.toLowerCase() && i.dest.toLowerCase() === dest.toLowerCase();
+          return i.description === link && i.dest === dest;
         })) || _.isEmpty(this.nodes[host])) {
-      this.nodes[host.toLowerCase()].push({description: link.toLowerCase(), dest: dest.toLowerCase()});
-      this.neighbors[host.toLowerCase()].push(dest);
+      this.nodes[host].push({description: link, dest: dest});
+      this.neighbors[host].push(dest);
       return true;
     } else {
       return false;
@@ -171,7 +171,7 @@
 
   app.post('/host', function (req, res, next) {
     var name, ref;
-    name = (ref = req.body.name) !== null ? ref : false;
+    name = (ref = req.body.name.toLowerCase()) !== null ? ref : false;
     if (!name) {
       return res.status(400).jsonp({message: "You must specify a hostname"});
     }
@@ -192,9 +192,9 @@
   });
 
   app.post('/link', function (req, res, next) {
-    var host = req.body.host,
-        link = req.body.description,
-        dest = req.body.dest;
+    var host = req.body.host.toLowerCase(),
+        link = req.body.description.toLowerCase(),
+        dest = req.body.dest.toLowerCase();
     if (!host || !link || !dest) {
       return res.status(400).jsonp({message: "You must specify a hostname, link, and a destination"});
     }
@@ -218,8 +218,8 @@
   });
 
   app.get('/path/:A/to/:B', function (req, res, next) {
-    var host = req.params.A,
-        dest = req.params.B;
+    var host = req.params.A.toLowerCase(),
+        dest = req.params.B.toLowerCase();
     if (!host || !dest) {
       return res.status(400).jsonp({message: "You must specify a hostname and a destination"});
     }
